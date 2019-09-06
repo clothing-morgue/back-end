@@ -1,0 +1,31 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clothing-morgue/back-end.git"
+  },
+  "keywords": [],
+  "author": "Joe Bugajski <joebugajski@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clothing-morgue/back-end/issues"
+  },
+  "homepage": "https://github.com/clothing-morgue/back-end#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@types/dotenv": "^6.1.1",
+    "nodemon": "^1.19.2"
+  },
+  "dependencies": {
+    "dotenv": "^8.1.0"
+  }
+}
