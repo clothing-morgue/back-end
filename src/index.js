@@ -11,11 +11,19 @@ const app = express();
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Hello from Node!');
+    res.send('Received GET HTTP method');
 });
 
-app.get('/test', (req, res) => {
-    res.send('Hello from test!');
+app.post('/', (req, res) => {
+    res.send('Received POST HTTP request');
+});
+
+app.put('/', (req, res) => {
+    res.send('Received PUT HTTP method');
+});
+
+app.delete('/', (req, res) => {
+    res.send('Received DELETE HTTP request');
 });
 
 app.listen(process.env.PORT, () =>
