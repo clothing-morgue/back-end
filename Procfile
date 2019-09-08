@@ -1,1 +1,0 @@
-web: node run babel-node src/index.js
