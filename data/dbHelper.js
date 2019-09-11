@@ -2,9 +2,11 @@ import db from "./dbConfig";
 
 module.exports = {
   find,
-  findById
+  findById,
+  add
 };
 
+// this is the equivalent of db.select('*').from('users')
 function find() {
   return db("users");
 }
@@ -21,4 +23,11 @@ function findById(id) {
   return db("users")
     .where({ id })
     .first();
+}
+
+// An alternate way to write that would be db('users').where({ id: 3 });
+
+async function add(user) {
+  let addedUser = await db('users').returning('id').insert(user);
+  return findById(addedUser[0]);
 }

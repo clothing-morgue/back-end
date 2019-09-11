@@ -1,5 +1,6 @@
 import { Router } from "express";
 import User from "../../data/dbHelper";
+import dbConfig from "../../data/dbConfig";
 
 const router = Router();
 
@@ -38,11 +39,24 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// router.post("/", (req, res) => {
-//   let user = req.body;
-//   User.add(user);
-//   res.status(201).json({ url: "/users", operation: "POST" });
-// });
+router.post("/", async (req, res) => {
+  const user = req.body;
+
+  for (let requiredParameter of ["first_name", "last_name", "email"]) {
+    if (!user[requiredParameter]) {
+      return res.status(422).send({
+        error: `Expected format: { first_name: <String>, last_name: <String>, email: <String> }. You're missing a "${requiredParameter}" property.`
+      });
+    }
+  }
+  User.add(user)
+    .then((user) => {
+      res.status(201).json({ user });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+});
 
 router.put("/:id", (req, res) => {
   const id = req.params.id;
