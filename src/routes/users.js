@@ -3,10 +3,21 @@ import User from "../../data/dbHelper";
 
 const router = Router();
 
+// This get route makes sorting easy
+// When you send a get request
+// Simply add ?sortby=column_name to the end of the query string
+// For example "http://localhost:3000/users?sortby=last_name"
+// Will return all users sorted by their last names
+
 router.get("/", (req, res) => {
+  console.log(req.query);
+  const sortField = req.query.sortby || "id";
   User.find()
     .then((users) => {
-      res.json(users);
+      const response = users.sort((a, b) =>
+        a[sortField] < b[sortField] ? -1 : 1
+      );
+      res.json(response);
     })
     .catch((err) => {
       res.status(500).json({
@@ -25,6 +36,22 @@ router.get("/:id", (req, res) => {
       res.status(404).json({ err: "invalid user id" });
     }
   });
+});
+
+// router.post("/", (req, res) => {
+//   let user = req.body;
+//   User.add(user);
+//   res.status(201).json({ url: "/users", operation: "POST" });
+// });
+
+router.put("/:id", (req, res) => {
+  const id = req.params.id;
+  res.status(200).json({ url: `/users/${id}`, operation: "PUT" });
+});
+
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  res.status(201).json({ url: `/users/${id}`, operation: "DELETE" });
 });
 
 export default router;

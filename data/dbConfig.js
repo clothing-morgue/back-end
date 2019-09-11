@@ -1,6 +1,8 @@
-let dbEngine = process.env.DB_ENV || "development";
-let config = require("../knexfile")[dbEngine];
+const dbEngine = process.env.DB_ENV || "development";
+import knex from 'knex';
+import knexConfigs from '../knexfile';
+const config = knexConfigs[dbEngine];
 
 console.log(config);
 
-module.exports = require("knex")(config);
+export default knex(config);

@@ -1,42 +1,43 @@
 // Update with your config settings.
 
 module.exports = {
-
   development: {
-    client: 'pg',
+    client: "pg",
     connection: {
-      database: 'clothing-morgue',
-      user: 'postgres',
-      password: 'HorseC@sio82'
+      database: process.env.DB_NAME,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD
     },
     migrations: {
-      directory: './data/migrations'
+      directory: "./data/migrations"
     },
     seeds: {
-      directory: './data/seeds'
-    }
+      directory: "./data/seeds"
+    },
+    useNullAsDefault: true
   },
 
   staging: {
-    client: 'pg',
+    client: "pg",
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: './data/migrations'
+      directory: "./data/migrations"
     },
     seeds: {
-      directory: './data/seeds'
-    }
+      directory: "./data/seeds"
+    },
+    useNullAsDefault: true
   },
 
   production: {
-    client: 'pg',
+    client: "pg",
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: './data/migrations'
+      directory: "./data/migrations"
     },
     seeds: {
-      directory: './data/seeds'
-    }
+      directory: "./data/seeds"
+    },
+    useNullAsDefault: true
   }
-
 };
