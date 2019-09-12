@@ -1,4 +1,4 @@
-require('dotenv').config();
+//require('dotenv').config();
 import db from "./dbConfig";
 
 module.exports = {

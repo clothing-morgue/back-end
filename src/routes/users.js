@@ -1,6 +1,5 @@
 import { Router } from "express";
-import User from "../../data/dbHelper";
-import dbConfig from "../../data/dbConfig";
+import User from '../data/dbHelper';
 
 const router = Router();
 
