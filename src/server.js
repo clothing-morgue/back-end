@@ -1,6 +1,8 @@
-import "dotenv/config";
-import cors from "cors";
+require("dotenv/config");
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import express from "express";
+import cors from "cors";
 import cloudinary from "cloudinary";
 import routes from "./routes";
 

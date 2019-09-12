@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "connectionTimeout": 30,
+      "database": "clothing-morgue",
+      "dialect": "PostgreSQL",
+      "name": "Clothing Morgue Development Database",
+      "password": "HorseC@sio82",
+      "port": 5432,
+      "server": "127.0.0.1",
+      "username": "postgres"
+    }
+  ]
+}
