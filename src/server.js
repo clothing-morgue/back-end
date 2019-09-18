@@ -33,7 +33,7 @@ async function getClients() {
   const clientList = clients.map(client => ({
     id: client.client_id,
     name: client.name,
-    description: clent.description || "",
+    description: client.description || "",
     links: [{
       uri: `${apiPrefix}/clients/${client.client_id}`,
       rel: "client"
