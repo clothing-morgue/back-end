@@ -1,6 +1,6 @@
-exports.up = function(knex) {
+export function up(knex) {
   return knex.schema.createTable("shipping", (tbl) => {
-    tbl.increments("id");
+    tbl.increments("id").primary();
     tbl
       .integer("user_id")
       .notNullable()
@@ -18,8 +18,8 @@ exports.up = function(knex) {
       .integer("zip")
       .notNullable();
   });
-};
+}
 
-exports.down = function(knex) {
+export function down(knex) {
   return knex.schema.dropTableIfExists("shipping");
-};
+}
