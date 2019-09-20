@@ -1,4 +1,4 @@
-export function up(knex) {
+exports.up = function(knex) {
   return knex.schema.createTable("products", (tbl) => {
     tbl.increments("id").primary();
     tbl.string("name").notNullable();
@@ -9,6 +9,6 @@ export function up(knex) {
   });
 }
 
-export function down(knex) {
+exports.down = function(knex) {
   return knex.schema.dropTableIfExists("products");
 }

@@ -1,4 +1,4 @@
-export function up(knex) {
+exports.up = function (knex) {
   return knex.schema.createTable("shipping", (tbl) => {
     tbl.increments("id").primary();
     tbl
@@ -20,6 +20,6 @@ export function up(knex) {
   });
 }
 
-export function down(knex) {
+exports.down = function(knex) {
   return knex.schema.dropTableIfExists("shipping");
 }

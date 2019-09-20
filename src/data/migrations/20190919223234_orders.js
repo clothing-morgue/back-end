@@ -1,5 +1,5 @@
 
-export function up(knex) {
+exports.up = function(knex) {
   return knex.schema.createTable("orders", (tbl) => {
     tbl.increments();
     tbl
@@ -12,6 +12,6 @@ export function up(knex) {
   })
 }
 
-export function down(knex) {
-  
+exports.down = function(knex) {
+  return knex.schema.dropTableIfExists("orders");
 }
