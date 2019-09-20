@@ -4,29 +4,19 @@ exports.up = function(knex) {
     tbl
       .integer("user_id")
       .notNullable()
-      .references("users.id")
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE");
+      .references("users.id");
     tbl
       .string("street_address")
-      .notNullable()
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE");
+      .notNullable();
     tbl
       .string("city")
-      .notNullable()
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE");
+      .notNullable();
     tbl
       .string("state")
-      .notNullable()
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE");
+      .notNullable();
     tbl
       .integer("zip")
-      .notNullable()
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE");
+      .notNullable();
   });
 };
 
