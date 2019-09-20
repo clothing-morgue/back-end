@@ -2,7 +2,7 @@ exports.up = function(knex) {
   return knex.schema.createTable("shipping", (tbl) => {
     tbl.increments("id");
     tbl
-      .text("user_id")
+      .integer("user_id")
       .notNullable()
       .references("users.id")
       .onDelete("CASCADE")
@@ -22,9 +22,14 @@ exports.up = function(knex) {
       .notNullable()
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
+    tbl
+      .integer("zip")
+      .notNullable()
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE");
   });
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists("users");
+  return knex.schema.dropTableIfExists("shipping");
 };
