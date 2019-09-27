@@ -20,9 +20,12 @@ app.use(express.urlencoded({ extended: true }));
 //   next();
 // });
 
-app.use("/session", routes.session);
+app.use("/orders", routes.orders);
 app.use("/users", routes.users);
-app.use("/messages", routes.messages);
+app.use("/products", routes.products);
+app.use("/purchased", routes.purchased);
+app.use("/shipping", routes.shipping);
+
 
 app.get("/", (req, res) => {
   return res.send("What are you doing here?");
