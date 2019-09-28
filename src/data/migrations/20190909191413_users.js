@@ -5,8 +5,8 @@ exports.up = function(knex) {
     tbl.string("first_name", 128).notNullable();
     tbl
       .string("email")
-      .notNullable()
-      .unique();
+      .unique()
+      .notNullable();
     tbl
       .boolean("admin")
       .notNullable()

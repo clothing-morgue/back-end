@@ -38,7 +38,15 @@ router.get("/:id", (req, res) => {
   });
 });
 
-router.post("/", async (req, res) => {
+router.post("/profile", async (req, res) => {
+  // const { userData } = req.body;
+
+  // let getUser;
+  // if (await User.canInsertUser(userData.email)) {
+  //   getUser = await User.addUser(userData);
+  // } else {
+  //   getUser = await getUserByEmail()
+  // }
   const user = req.body;
 
   for (let requiredParameter of ["first_name", "last_name", "email"]) {
@@ -48,23 +56,33 @@ router.post("/", async (req, res) => {
       });
     }
   }
-  User.add(user)
-    .then((user) => {
-      res.status(201).json({ user });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
+
+  if (await User.canInsertUser(user.email)) {
+    User.addUser(user)
+      .then((user) => {
+        res.status(201).json({ user });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
+  } else {
+    return res.status(409).send({
+      error: 'A user with that email address already exists'
     });
+  }
+
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   const id = req.params.id;
-  res.status(200).json({ url: `/users/${id}`, operation: "PUT" });
+  const updatedUser = await User.updateUser(id);
+  return res.status(200).json(updatedUser[0]);
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  res.status(201).json({ url: `/users/${id}`, operation: "DELETE" });
+  const del = await User.deleteUser(id);
+  return res.status(200).json(del);
 });
 
 export default router;

@@ -4,7 +4,8 @@ import db from "../dbConfig";
 module.exports = {
   find,
   findById,
-  add,
+  canInsertUser,
+  addUser,
   updateUser,
   deleteUser
 };
@@ -30,7 +31,27 @@ function findById(id) {
 
 // An alternate way to write that would be db('users').where({ id: 3 });
 
-async function add(user) {
+async function canInsertUser(email) {
+  let canAdd = false;
+
+  await db("users")
+    .select()
+    .where("email", email)
+    .then(rows => {
+      if (rows.length == 0) {
+        canAdd = true;
+      } else if (rows.length > 0) {
+        canAdd  = false;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    return canAdd;
+}
+
+async function addUser(user) {
   let addedUser = await db("users")
     .returning("id")
     .insert(user);
