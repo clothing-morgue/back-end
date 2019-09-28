@@ -38,7 +38,7 @@ router.get("/:id", (req, res) => {
   });
 });
 
-router.post("/profile", async (req, res) => {
+router.post("/", async (req, res) => {
   // const { userData } = req.body;
 
   // let getUser;
@@ -67,10 +67,9 @@ router.post("/profile", async (req, res) => {
       });
   } else {
     return res.status(409).send({
-      error: 'A user with that email address already exists'
+      error: "A user with that email address already exists"
     });
   }
-
 });
 
 router.put("/:id", async (req, res) => {
