@@ -77,11 +77,18 @@ router.put("/:id", async (req, res) => {
     ...req.body,
     id: req.params.id
   };
+
   try {
-    const updatedUser = await User.updateUser(user);
-    return res.status(200).json(updatedUser[0]);
-  }
-  catch (error) {
+    let validatedUser = await User.findById(user.id);
+    if (validatedUser) {
+      const updatedUser = await User.updateUser(user);
+      return res.status(200).json(updatedUser[0]);
+    } else {
+      return res
+        .status(404)
+        .json({ message: "Can't edit user; record not found." });
+    }
+  } catch (error) {
     return next(error);
   }
 });
@@ -91,8 +98,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const del = await User.deleteUser(id);
     return res.status(200).json(del);
-  }
-  catch (error) {
+  } catch (error) {
     return next(error);
   }
 });
