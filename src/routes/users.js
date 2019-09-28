@@ -77,14 +77,24 @@ router.put("/:id", async (req, res) => {
     ...req.body,
     id: req.params.id
   };
-  const updatedUser = await User.updateUser(user);
-  return res.status(200).json(updatedUser[0]);
+  try {
+    const updatedUser = await User.updateUser(user);
+    return res.status(200).json(updatedUser[0]);
+  }
+  catch (error) {
+    return next(error);
+  }
 });
 
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  const del = await User.deleteUser(id);
-  return res.status(200).json(del);
+  try {
+    const del = await User.deleteUser(id);
+    return res.status(200).json(del);
+  }
+  catch (error) {
+    return next(error);
+  }
 });
 
 export default router;
