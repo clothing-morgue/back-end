@@ -73,8 +73,11 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const id = req.params.id;
-  const updatedUser = await User.updateUser(id);
+  const user = {
+    ...req.body,
+    id: req.params.id
+  };
+  const updatedUser = await User.updateUser(user);
   return res.status(200).json(updatedUser[0]);
 });
 
