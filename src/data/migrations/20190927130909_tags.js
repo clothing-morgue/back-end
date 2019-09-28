@@ -3,7 +3,7 @@ exports.up = function(knex) {
     tags.increments("id").primary();
     tags.string("tagName", 25).notNullable();
     tags
-      .string("productTagged")
+      .integer("productTagged")
       .notNullable()
       .references("products.id");
   });
