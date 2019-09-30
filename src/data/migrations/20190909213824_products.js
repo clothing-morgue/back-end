@@ -7,8 +7,8 @@ exports.up = function(knex) {
     tbl.text("description");
     tbl.string("category");
   });
-}
+};
 
 exports.down = function(knex) {
   return knex.schema.dropTableIfExists("products");
-}
+};

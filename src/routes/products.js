@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Product from "../data/helpers/userHelpers";
+import Product from "../data/helpers/productHelpers";
 import { userInfo } from "os";
 
 const router = Router();
