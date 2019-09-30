@@ -39,14 +39,6 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  // const { userData } = req.body;
-
-  // let getUser;
-  // if (await User.canInsertUser(userData.email)) {
-  //   getUser = await User.addUser(userData);
-  // } else {
-  //   getUser = await getUserByEmail()
-  // }
   const user = req.body;
 
   for (let requiredParameter of ["first_name", "last_name", "email"]) {
