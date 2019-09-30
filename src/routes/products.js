@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Product from "../data/helpers/productHelpers";
-import { userInfo } from "os";
+import { runInNewContext } from "vm";
 
 const router = Router();
 
@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
   for (let requiredParameter of ["name", "price", "cost"]) {
     if (!product[requiredParameter]) {
       return res.status(422).send({
-        error: `Expected format: { name: <String>, price: <Decimal>, cost: <Decimal> }. You're missing a "${requiredParameter}" property.`
+        error: `Expected format: { name: <String>, price: <Decimal>, cost: <Decimal> }. You're missing a '${requiredParameter}' property.`
       });
     }
   }
@@ -58,6 +58,37 @@ router.post("/", async (req, res) => {
     .catch(error => {
       res.status(500).json({ error });
     });
+});
+
+router.put("/:id", async (req, res) => {
+  const product = {
+    ...req.body,
+    id: req.params.id
+  };
+
+  try {
+    let validatedProduct = await Product.findById(product.id);
+    if (validatedProduct) {
+      let updatedProduct = await Product.updateProduct(product);
+      return res.status(200).json(updatedProduct[0]);
+    } else {
+      return res
+        .status(404)
+        .json({ message: "Can't edit product; record not found."});
+    }
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  try{
+    const del = await Product.deleteProduct(id);
+    return res.status(200).json(del);
+  } catch (error) {
+    return next(error);
+  }
 });
 
 export default router;
