@@ -1,10 +1,12 @@
 //require('dotenv').config();
-import db from "./dbConfig";
+import db from "../dbConfig";
 
 module.exports = {
   find,
   findById,
-  add
+  add,
+  updateUser,
+  deleteUser
 };
 
 // this is the equivalent of db.select('*').from('users')
@@ -29,6 +31,21 @@ function findById(id) {
 // An alternate way to write that would be db('users').where({ id: 3 });
 
 async function add(user) {
-  let addedUser = await db('users').returning('id').insert(user);
+  let addedUser = await db("users")
+    .returning("id")
+    .insert(user);
   return findById(addedUser[0]);
+}
+
+function updateUser(updates) {
+  return db("users as u")
+    .where({ "u.id": updates.id })
+    .update(updates)
+    .returning("*");
+}
+
+function deleteUser(user_id) {
+  return db("users as u")
+    .where({ "u.id": user_id })
+    .del();
 }

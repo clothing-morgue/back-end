@@ -1,5 +1,5 @@
 import { Router } from "express";
-import User from '../data/dbHelper';
+import User from "../data/helpers/userHelpers";
 
 const router = Router();
 
@@ -48,23 +48,51 @@ router.post("/", async (req, res) => {
       });
     }
   }
-  User.add(user)
-    .then((user) => {
-      res.status(201).json({ user });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
+
+  if (await User.canInsertUser(user.email)) {
+    User.addUser(user)
+      .then((user) => {
+        res.status(201).json({ user });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
+  } else {
+    return res.status(409).send({
+      error: "A user with that email address already exists"
     });
+  }
 });
 
-router.put("/:id", (req, res) => {
-  const id = req.params.id;
-  res.status(200).json({ url: `/users/${id}`, operation: "PUT" });
+router.put("/:id", async (req, res) => {
+  const user = {
+    ...req.body,
+    id: req.params.id
+  };
+
+  try {
+    let validatedUser = await User.findById(user.id);
+    if (validatedUser) {
+      const updatedUser = await User.updateUser(user);
+      return res.status(200).json(updatedUser[0]);
+    } else {
+      return res
+        .status(404)
+        .json({ message: "Can't edit user; record not found." });
+    }
+  } catch (error) {
+    return next(error);
+  }
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  res.status(201).json({ url: `/users/${id}`, operation: "DELETE" });
+  try {
+    const del = await User.deleteUser(id);
+    return res.status(200).json(del);
+  } catch (error) {
+    return next(error);
+  }
 });
 
 export default router;

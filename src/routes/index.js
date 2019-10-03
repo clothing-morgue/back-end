@@ -1,9 +1,13 @@
-import session from "./session";
 import users from "./users";
-import messages from "./messages";
+import orders from "./orders";
+import products from "./products";
+import shipping from "./shipping";
+import purchased from "./purchased";
 
 export default {
-  session,
   users,
-  messages
+  orders,
+  products,
+  shipping,
+  purchased
 };
