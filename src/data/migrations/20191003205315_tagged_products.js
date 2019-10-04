@@ -8,8 +8,7 @@ exports.up = function(knex) {
       .integer("product_id")
       .notNullable()
       .references("products.id");
-    tagged
-      .raw('PRIMARY KEY (TAG_ID, PRODUCT_ID)');
+    tagged.primary(["tag_id", "product_id"]);
   });
 };
 
