@@ -2,7 +2,7 @@ import db from "../dbConfig";
 
 module.exports = {
   getTags,
-  // getSingleTag,
+  getTagByName,
   canAddTag,
   createTag,
   deleteTag,
@@ -14,10 +14,10 @@ function getTags() {
   return db("tags");
 }
 
-// function getSingleTag() {
-//   return db("tags")
-//     .where()
-// }
+function getTagByName(tagName) {
+  return db("tags")
+    .where({ tagName: tagName });
+}
 
 
 async function canAddTag(tagName) {
