@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Tags from "../data/helpers/productHelpers";
+import Tags from "../data/helpers/tagsHelpers";
 
 const router = Router();
 
