@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
     }
   }
 
-  if (!await Tags.canAddTag(tag.tagName)) {
+  if (await Tags.canAddTag(tag.tagName)) {
     Tags.createTag({ tagName: tag.tagName})
       .then(tag => {
         res.status(201).json({ tag });
