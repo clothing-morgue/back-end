@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   let tag = req.body;
   for (let requiredParameter of ["product_id", "tagName"]) {
     if (!tag[requiredParameter]) {
