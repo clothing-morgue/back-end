@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Tags from "../data/helpers/tagsHelpers";
+import { runInNewContext } from "vm";
 
 const router = Router();
 
@@ -27,16 +28,24 @@ router.post("/", async (req, res) => {
   }
 
   if (await Tags.canAddTag(tag.tagName)) {
-    Tags.createTag({ tagName: tag.tagName})
-      .then(tag => {
-        res.status(201).json({ tag });
-      })
-      .catch(error => {
-        res.status(500).json({ error });
-      });
-  } else {
-    console.log('Tag already exists');
-  }
+    try {
+      const tagObj = await Tags.createTag({ tagName: tag.tagName});
+      const taggedProd = await Tags.attachTag({ tag_id: tagObj.id, product_id: tag.product_id});
+      res.status(201).json({ taggedProd });
+    }
+    catch (error) {
+      return next(error);
+    }
+  //   Tags.createTag({ tagName: tag.tagName})
+  //     .then(tag => {
+  //       res.status(201).json({ tag });
+  //     })
+  //     .catch(error => {
+  //       res.status(500).json({ error });
+  //     });
+  // } else {
+  //   console.log('Tag already exists');
+  // }
 
 });
 
