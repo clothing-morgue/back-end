@@ -1,6 +1,5 @@
 import { Router } from "express";
 import Product from "../data/helpers/productHelpers";
-import { runInNewContext } from "vm";
 
 const router = Router();
 
