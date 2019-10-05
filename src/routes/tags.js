@@ -47,6 +47,6 @@ router.post("/", async (req, res) => {
   //   console.log('Tag already exists');
   // }
 
-});
+}});
 
 export default router;
