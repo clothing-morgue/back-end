@@ -26,22 +26,42 @@ router.post("/", async (req, res, next) => {
       });
     }
   }
-  let thisTag = await Tags.getTagByName(tag.tagName);
 
-  thisTag ? 
-    Tags
-      .attachTag({ 
-        tag_id: thisTag.id, 
-        product_id: tag.product_id })
-      .then((tagged) => {
-          res.status(201).json(tagged);
-        })
-      .catch((error) => {
-        res
-          .status(error)
-          .json({ message: "trouble attaching tag", error: error });
-        })
-    : res.status(500).json({ message: 'That tag does not exist'});
+  try {
+    let thisTag = await Tags.getTagByName(tag.tagName);
+    
+    if (thisTag) {
+      let taggedProduct = await Tags.attachTag({
+        tag_id: thisTag.id,
+        product_id: tag.product_id
+      });
+      return res.status(200).json(taggedProduct);
+    } else {
+      let thisTag = await Tags.createTag(tag);
+      if (thisTag) {
+        let taggedProduct = await Tags.attachTag({
+          tag_id: thisTag.id,
+          product_id: tag.product_id
+        });
+        return res.status(200).json(taggedProduct);
+    }
+  }} catch (error) {
+    return next(error);
+  }
+
+    // Tags
+    //   .attachTag({ 
+    //     tag_id: thisTag.id, 
+    //     product_id: tag.product_id })
+    //   .then((tagged) => {
+    //       res.status(201).json(tagged);
+    //     })
+    //   .catch((error) => {
+    //     res
+    //       .status(error)
+    //       .json({ message: "trouble attaching tag", error: error });
+    //     })
+    // : res.status(500).json({ message: 'That tag does not exist'});
   // if (await Tags.canAddTag(tag.tagName)) {
   //   try {
   //     const tagObj = await Tags.createTag({ tagName: tag.tagName });
